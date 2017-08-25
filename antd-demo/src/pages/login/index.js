@@ -1,70 +1,72 @@
-import React from 'react';
-import { Form, Input, Button, notification, Icon } from 'antd';
-import createHistory from 'history/createHashHistory';
+import React, { Component } from 'react'
+import { Form, Input, Button, notification, Icon } from 'antd'
+import createHistory from 'history/createHashHistory'
 
 import './index.less'
 
-const FormItem = Form.Item;
-const history = createHistory();
+const history = createHistory()
+const FormItem = Form.Item 
 
-class LoginPage extends React.Component {
+class LoginPage extends Component {
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        let n = this.props.form.getFieldsValue().username;
-        let p = this.props.form.getFieldsValue().password;
-        if (n === '123' && p === '123') {
-            // 表单的路由处理
-            history.push('/index');
-        } else {
-            this.openNotificationWithIcon('info');
-        }
-    }
+	// 表单提交
+	handleSubmit = (e) => {
+		e.preventDefault()
+		let name = this.props.form.getFieldsValue().username
+		let password = this.props.form.getFieldsValue().password
 
-    // 返回一个弹框对象，提示用户名和密码
-    openNotificationWithIcon = (type) => {
-        return notification[type]({
-                 message: '用户名&密码',
-                 description: '都是：123',
-                 duration: 6,
-                 icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
-               })
-    }
+		if(name == '123' && password == '123'){
+			history.push('/index')
+		}else{
+			this.openNotificationWithIcon('info')
+		}
+	}
 
-    componentDidMount() {
-        this.openNotificationWithIcon('info');
-    }
+	// 提示弹框
+	openNotificationWithIcon = (type) => {
+		notification[type]({
+			message: '用户名&密码',
+			description: '都是123',
+			duration: 6,
+			icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
+		})
+	}
 
-    render() {
-        const { getFieldDecorator } = this.props.form
-        return (
-            <div className="loginpagewrap">
-                <div className="box">
-                    <p>Welcome to the ReactSPA</p>
-                    <div className="loginWrap">
-                        <Form onSubmit={this.handleSubmit}>
-                            <FormItem>
-                                {getFieldDecorator('username', {
-                                    rules: [{ required: true, message: '请输入用户名' }],
-                                })(
-                                    <Input placeholder="Username" />
-                                )}
-                            </FormItem>
-                            <FormItem>
-                                {getFieldDecorator('password', {
-                                    rules: [{ required: true, message: '请输入密码' }],
-                                })(
-                                    <Input type="password" placeholder="Password" />
-                                )}
-                            </FormItem>
-                            <Button type="primary" htmlType="submit" className="loginBtn">Login</Button>
-                        </Form>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+	componentDidMount() {
+		this.openNotificationWithIcon('info');
+	}
+
+	render() {
+		const { getFieldDecorator } = this.props.form
+
+		return (
+			<div className="loginpagewrap">
+				<div className="box">
+					<p>欢迎来到antd-demo</p>
+					<div className="loginWrap">
+						<Form onSubmit={ this.handleSubmit }>
+							<FormItem>
+								{
+									getFieldDecorator('username', {
+										rules: [{required: true, message: '请输入用户名'}]
+									})(<Input placeholder="用户名" />)
+								}
+							</FormItem>
+							<FormItem>
+								{
+									getFieldDecorator('password', {
+										rules: [{required: true, message: '请输入密码'}]
+									})(<Input type="password" placeholder="Password" />)
+								}
+							</FormItem>
+							<Button type="primary" htmlType="submit" className="loginBtn">登录</Button>
+						</Form>
+					</div>
+				</div>
+			</div>
+		)
+	}
 }
 
-let Login = Form.create()(LoginPage);
-export default Login;
+let Login = Form.create()(LoginPage)
+export default Login
