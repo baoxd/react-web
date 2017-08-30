@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, message, Modal } from 'antd'
-// import 
+import SearchBar from '../../components/searchbar'
+import Table from '../../components/table'
 import fetchJsonp from 'fetch-jsonp'
 import './index.less'
 import moment from 'moment'
@@ -25,7 +26,7 @@ class Music extends Component {
 		fetchJsonp(`http://tingapi.ting.baidu.com/v1/restserver/ting?xml&calback=&from=webapp_music&method=baidu.ting.billboard.billList&type=${typeId}&size=100&offset=0`, {
 			method: 'GET'
 		}).then((res) => {
-			retrun res.json()
+			return res.json()
 		}).then((data) => {
 			const songArray = []
             let songList = data.song_list
@@ -311,7 +312,35 @@ class Music extends Component {
     render() {
     	return (
     		<div id="wrap">
-    			
+    			<SearchBar 
+    				onSubmit={this.onSearch}
+    				fields={this.searchFields()}
+    			/>
+    			<div className="tableBox">
+    				<Button onClick={this.add} className="addButton">添加</Button>
+    				<div style={{ paddingTop: 43 }}>
+                        <Table
+                            onCtrlClick={ this.tableAction }
+                            pagination={ true }
+                            pageSize={10}
+                            header={ this.tableHeader() }
+                            data={ this.state.tData }
+                            loading={ this.state.loading }
+                            action={row => [{
+                                key: 'edit',
+                                name: '修改',
+                                color: 'blue',
+                                icon: 'edit',
+                            }, {
+                                key: 'delete',
+                                name: '删除',
+                                color: 'red',
+                                icon: 'delete'
+                            }]}
+                            scroll={{y: 385 }}
+                        />
+                    </div>
+    			</div>
     		</div>
     	)
     }
