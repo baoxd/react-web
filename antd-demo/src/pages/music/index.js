@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, message, Modal } from 'antd'
 import SearchBar from '../../components/searchbar'
 import Table from '../../components/table'
+import { FormModal } from '../../components/modalForm'
 import fetchJsonp from 'fetch-jsonp'
 import './index.less'
 import moment from 'moment'
@@ -20,6 +21,11 @@ class Music extends Component {
             modalShow: false,
             modalShowEdit: false
 		}
+		this.add = this.add.bind(this)
+        this.onOk = this.onOk.bind(this)
+        this.onCancel = this.onCancel.bind(this)
+        this.onOkEdit = this.onOkEdit.bind(this)
+        this.onCancelEdit = this.onCancelEdit.bind(this)
 	}
 	// 异步请求数据
 	fetchTableData = (typeId, searchFields) => {
@@ -341,6 +347,24 @@ class Music extends Component {
                         />
                     </div>
     			</div>
+    			<FormModal
+                    modalKey="add"
+                    visible={this.state.modalShow}
+                    title="添加音乐"
+                    fields={this.fields()}
+                    onOk={this.onOk}
+                    onCancel={this.onCancel}
+                    okText="保存"
+                />
+                <FormModal
+                    modalKey="Edit"
+                    visible={this.state.modalShowEdit}
+                    title="修改音乐"
+                    fields={this.fieldsEdit()}
+                    onOk={this.onOkEdit}
+                    onCancel={this.onCancelEdit}
+                    okText="保存"
+                />
     		</div>
     	)
     }
