@@ -34,6 +34,7 @@ module.exports = {
 				exclude:  path.resolve(__dirname, './node_modules'),
 				options: {
 					plugins: [
+						"transform-decorators-legacy",
 						// 实现对antd的模块加载，在使用antd模块时 只需引入js文件，css文件不用手动引入
 						['import', [{ libraryName: 'antd', style: true }]]
 					],

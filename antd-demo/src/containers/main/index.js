@@ -5,6 +5,8 @@ import './index.less'
 import Index from '../../pages/index'
 import Music from '../../pages/music'
 import Tools from '../../pages/tools'
+import Editor from '../../pages/editor'
+import TodoList from '../../pages/todoList'
 
 const { Content } = Layout
 
@@ -16,7 +18,9 @@ class Main extends Component {
 				<Route path="/index" component={Index}></Route>
 				<Route path="/music" component={Music}></Route>
 				<Route path="/tools" component={Tools}></Route>
-			</Content>
+				<Route path="/editor" component={Editor}></Route>
+				<Route path="/todoList" component={TodoList}></Route>
+ 			</Content>
 		)
 	}
 }
